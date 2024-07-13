@@ -1,7 +1,7 @@
 import { FormEvent, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import InviteGuestsModal from "../../components/InviteGuestsModal"
-import ConfirmTripModal from "../../components/ConfirmTripModal"
+import InviteGuestsModal from "../../components/modals/InviteGuestsModal"
+import ConfirmTripModal from "../../components/modals/ConfirmTripModal"
 import InputTripDetails from "./InputTripDetails"
 import InputGuests from "./InputGuests"
 

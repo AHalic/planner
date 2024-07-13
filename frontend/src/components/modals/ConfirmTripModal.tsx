@@ -1,12 +1,13 @@
 import { AtSign, User, X } from "lucide-react";
 import { Dispatch, FormEvent, SetStateAction } from "react";
+import Button from "../Button";
 
 export default function ConfirmTripModal({setIsModalConfirmOpen, confirmTrip}: {
     setIsModalConfirmOpen: Dispatch<SetStateAction<boolean>>,
     confirmTrip: (e: FormEvent<HTMLFormElement>) => void
 }) {
     return (
-        <div className="fixed inset-0 bg-black/60 flex items-center justify-center">
+      <div className="fixed inset-0 bg-black/60 flex items-center justify-center">
         <div className="w-[640px] rounded-xl py-5 px-6 shadow-shape bg-zinc-900 space-y-5">
 
           <div className="space-y-2">
@@ -57,12 +58,12 @@ export default function ConfirmTripModal({setIsModalConfirmOpen, confirmTrip}: {
               /> 
             </div>              
 
-            <button 
+            <Button
+              size="full"
               type="submit"
-              className="bg-lime-300 w-full text-lime-950 text-center rounded-lg py-2 px-5 font-medium flex items-center justify-center gap-2 hover:bg-lime-400"
               >
               Confirm trip creation
-            </button>
+            </Button>
           </form>
         </div>
       </div>

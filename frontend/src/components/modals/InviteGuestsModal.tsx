@@ -1,5 +1,6 @@
 import { AtSign, Plus, X } from "lucide-react";
 import { Dispatch, FormEvent, SetStateAction } from "react";
+import Button from "../Button";
 
 export default function InviteGuestsModal({invitees, setIsModalGuestsOpen, addInvitee, removeInvitee}: {
     invitees: string[],
@@ -47,6 +48,7 @@ export default function InviteGuestsModal({invitees, setIsModalGuestsOpen, addIn
             ))}
           </div>
 
+          {/* DIVIDER */}
           <div className="w-full h-px bg-zinc-800"/>
 
           <form 
@@ -64,13 +66,12 @@ export default function InviteGuestsModal({invitees, setIsModalGuestsOpen, addIn
               /> 
             </div>
 
-            <button 
+            <Button 
               type="submit"
-              className="bg-lime-300 text-lime-950 rounded-lg py-2 px-5 font-medium flex items-center gap-2 hover:bg-lime-400"
               >
               Invite
               <Plus className="size-5" />
-            </button>
+            </Button>
           </form>
         </div>
       </div>
