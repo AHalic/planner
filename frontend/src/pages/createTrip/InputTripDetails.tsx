@@ -1,5 +1,6 @@
 import { ArrowRight, Calendar, MapPin, Settings2 } from "lucide-react";
 import { Dispatch, SetStateAction } from "react";
+import Button from "../../components/Button";
 
 export default function InputTripDetails({isGuestsOpenState}: {
     isGuestsOpenState: [boolean, Dispatch<SetStateAction<boolean>>]
@@ -18,6 +19,7 @@ export default function InputTripDetails({isGuestsOpenState}: {
           />
         </div>
 
+        {/* TODO: fazer componente generico */}
         <div className="flex items-center gap-2 ">
           <Calendar className="size-5 text-zinc-400" />
           <input
@@ -27,27 +29,27 @@ export default function InputTripDetails({isGuestsOpenState}: {
           />
         </div>
 
+        {/* DIVIDER */}
         <div className="w-px h-6 bg-zinc-800" />
 
         {isGuestsOpen ? (
-          <button 
+          <Button 
             onClick={() => setIsGuestsOpen(false)}
-            className="max-w-full min-w-fit bg-zinc-800 text-zinc-200 rounded-lg py-2 px-5 font-medium flex items-center gap-2 hover:bg-zinc-700 flex-no-wrap overflow-hidden"
+            variant="secondary"
             type="button"
             >
               Change location/date
               <Settings2 className="size-5" />
-          </button>              
+          </Button>              
         ) : (
-          <button 
-            className="bg-lime-300 text-lime-950 rounded-lg py-2 px-5 font-medium flex items-center gap-2 hover:bg-lime-400"
+          <Button
             type="button"
             onClick={() => setIsGuestsOpen(true)}
             >
             Continue
 
             <ArrowRight className="size-5" />
-          </button>
+          </Button>
         )}
 
       </div>

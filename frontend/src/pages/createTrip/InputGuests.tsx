@@ -1,5 +1,6 @@
 import { ArrowRight, UserRoundPlus } from "lucide-react";
 import { Dispatch, SetStateAction } from "react";
+import Button from "../../components/Button";
 
 export default function InputGuests({invitees, setIsModalGuestsOpen, setIsModalConfirmOpen}: {
     invitees: string[],
@@ -29,15 +30,14 @@ export default function InputGuests({invitees, setIsModalGuestsOpen, setIsModalC
             )}
         </button>
 
-        <button 
-          className="bg-lime-300 text-lime-950 rounded-lg py-2 px-5 font-medium flex items-center gap-2 hover:bg-lime-400"
+        <Button
           type="button"
           onClick={() => setIsModalConfirmOpen(true)}
           >
           Confirm Trip
 
           <ArrowRight className="size-5" />
-        </button>
+        </Button>
 
       </div>
     )
