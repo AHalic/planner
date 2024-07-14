@@ -1,10 +1,12 @@
 import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 import { z } from "zod";
-import { prisma } from "../lib/prisma";
+import { prisma } from "../../lib/prisma";
 import dayjs from "dayjs";
 import nodemailer from "nodemailer";
-import getMailClient from "../lib/mailer";
+import getMailClient from "../../lib/mailer";
+import { ClientError } from "../../errors/client-error";
+import { env } from "../../env";
 
 export async function createTrip(app: FastifyInstance) {
     // Use the ZodTypeProvider to validate the request body
@@ -26,11 +28,11 @@ export async function createTrip(app: FastifyInstance) {
 
             // Validate dates
             if (dayjs(startDate).isBefore(new Date())) {
-                throw new Error('The start date must be in the future')
+                throw new ClientError('The start date must be in the future')
             }
 
             if (dayjs(startDate).isAfter(dayjs(endDate))) {
-                throw new Error('The end date must be after the start date')
+                throw new ClientError('The end date must be after the start date')
             }
 
             // Save the trip to the database
@@ -62,7 +64,7 @@ export async function createTrip(app: FastifyInstance) {
             const formattedStartDate = dayjs(startDate).format('MMMM DD, YYYY')
             const formattedEndDate = dayjs(endDate).format('MMMM DD, YYYY')
 
-            const confirmationUrl = `http://localhost:3333/trip/${trip.id}/confirm`
+            const confirmationUrl = `${env.API_BASE_URL}/trip/${trip.id}/confirm`
 
             // Send an email to the owner
             const mail = await getMailClient()
