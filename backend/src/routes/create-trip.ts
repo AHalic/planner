@@ -78,12 +78,12 @@ export async function createTrip(app: FastifyInstance) {
                 subject: 'Confirm your trip to ' + destination,
                 html: `
                     <div style="font-family: sans-serif; font-size: 16px; line-height: 1.6;">
-                        <p>You have been invited to participate in a trip to <strong>${destination}</strong> on the dates of <strong>${formattedStartDate} to ${formattedEndDate}</strong>.</p>
+                        <p>You have created a trip to <strong>${destination}</strong> on the dates of <strong>${formattedStartDate} to ${formattedEndDate}</strong>.</p>
                         <p></p>
-                        <p>To confirm your presence on the trip, click on the link below:</p>
+                        <p>To confirm your trip, click on the link below:</p>
                         <p></p>
                         <p>
-                            <a href="{{ $url }}">Confirm Attendance</a>
+                            <a href="${confirmationUrl}">Confirm Attendance</a>
                         </p>
                         
                         <p>If you are unaware of the purpose of this email or will not be able to attend, simply ignore this email.</p>
