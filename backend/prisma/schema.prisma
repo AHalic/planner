@@ -19,7 +19,9 @@ model Trip {
   createdAt   DateTime @default(now())
   isConfirmed Boolean  @default(false)
 
-  guests Guest[]
+  guests     Guest[]
+  activities Activity[]
+  links      Link[]
 }
 
 model Guest {
@@ -30,6 +32,26 @@ model Guest {
 
   isConfirmed Boolean @default(false)
   isOwner     Boolean @default(false)
+
+  tripId String
+  trip   Trip   @relation(fields: [tripId], references: [id])
+}
+
+model Activity {
+  id String @id @default(uuid())
+
+  name String
+  date DateTime
+
+  tripId String
+  trip   Trip   @relation(fields: [tripId], references: [id])
+}
+
+model Link {
+  id String @id @default(uuid())
+
+  name String
+  url  String
 
   tripId String
   trip   Trip   @relation(fields: [tripId], references: [id])
