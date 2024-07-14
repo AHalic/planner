@@ -5,6 +5,23 @@ import { prisma } from "../../lib/prisma";
 import dayjs from "dayjs";
 import { ClientError } from "../../errors/client-error";
 
+/**
+ * Creates a new activity, and add it to a trip.
+ * 
+ * **Path Parameters**
+ *  - `tripId` (UUID): The ID of the trip to which the activity will be added.
+ * 
+ * **Request Body**
+ *  - `name` string: Activity's name. Must be at least 3 characters long.
+ *  - `date` Date: The date of the activity. Must be a valid date string.
+ * 
+ * **Responses**
+ *  - `200 OK`: Activity created successfully. Returns the created activity object.
+ *  - `400 Bad Request`: Invalid request data.
+ * 
+ * 
+ * @param app - The Fastify instance.
+ */
 export async function createActivity(app: FastifyInstance) {
     app.withTypeProvider<ZodTypeProvider>()
         .post('/trip/:tripId/activity', {
