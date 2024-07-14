@@ -5,6 +5,19 @@ import { prisma } from "../../lib/prisma";
 import { ClientError } from "../../errors/client-error";
 
 
+/**
+ * Retrieves all important/useful links for a trip.
+ * 
+ * **Query Parameters**
+ *  - `tripId` (UUID): The ID of the trip.
+ * 
+ * **Responses**
+ *  - `200 OK`: Links retrieved successfully. Returns the list of links.
+ *  - `400 Bad Request`: Invalid request data.
+ * 
+ * 
+ * @param app - The Fastify instance.
+ */
 export async function getLinks(app: FastifyInstance) {
     app.withTypeProvider<ZodTypeProvider>()
         .get('/trip/:tripId/link', {

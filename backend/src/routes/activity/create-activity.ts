@@ -8,7 +8,7 @@ import { ClientError } from "../../errors/client-error";
 /**
  * Creates a new activity, and add it to a trip.
  * 
- * **Path Parameters**
+ * **Query Parameters**
  *  - `tripId` (UUID): The ID of the trip to which the activity will be added.
  * 
  * **Request Body**

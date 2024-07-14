@@ -5,7 +5,18 @@ import { prisma } from "../../lib/prisma";
 import dayjs from "dayjs";
 import { ClientError } from "../../errors/client-error";
 
-
+/**
+ * Retrieves all activities for a specific trip.
+ * 
+ * **Query Parameters**
+ *  - `tripId` (UUID): The ID of the trip for which activities will be retrieved.
+ * 
+ * **Responses**
+ *  - `200 OK`: Activities retrieved successfully. Returns an array of activity objects.
+ *  - `400 Bad Request`: Invalid request data.
+ * 
+ * @param app - The Fastify instance.
+ */
 export async function getActivities(app: FastifyInstance) {
     app.withTypeProvider<ZodTypeProvider>()
         .get('/trip/:tripId/activity', {

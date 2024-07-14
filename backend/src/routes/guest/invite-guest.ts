@@ -8,6 +8,23 @@ import getMailClient from "../../lib/mailer";
 import { ClientError } from "../../errors/client-error";
 import { env } from "../../env";
 
+
+/**
+ * Invites a guest to a trip, sending an email with a confirmation link.
+ * 
+ * **Query Parameters**
+ *  - `tripId` (UUID): The ID of the trip to which the guest will be invited.
+ * 
+ * **Request Body**
+ *  - `email` string: Guest's email. Must be a valid email address.
+ * 
+ * **Responses**
+ *  - `200 OK`: Guest added to the trip and email sent successfully. Returns the guest object.
+ *  - `400 Bad Request`: Invalid request data.
+ * 
+ * 
+ * @param app - The Fastify instance.
+ */
 export async function inviteGuest(app: FastifyInstance) {
     app.withTypeProvider<ZodTypeProvider>()
         .post('/trip/:tripId/guest', {

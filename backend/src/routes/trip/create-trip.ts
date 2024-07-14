@@ -8,6 +8,25 @@ import getMailClient from "../../lib/mailer";
 import { ClientError } from "../../errors/client-error";
 import { env } from "../../env";
 
+
+/**
+ * Creates a new trip and sends a confirmation email to the owner.
+ * 
+ * **Request Body**
+ *  - `destination` string: The destination of the trip.
+ *  - `startDate` date: The start date of the trip.
+ *  - `endDate` date: The end date of the trip.
+ *  - `ownerName` string: The name of the trip owner.
+ *  - `ownerEmail` string: The email of the trip owner.
+ *  - `guestsEmails` string[]: The email addresses of the guests.
+ * 
+ * **Responses**
+ *  - `200 OK`: Trip created successfully, email sent. Returns the trip ID.
+ *  - `400 Bad Request`: Invalid request data.
+ * 
+ * 
+ * @param app - The Fastify instance.
+ */
 export async function createTrip(app: FastifyInstance) {
     // Use the ZodTypeProvider to validate the request body
     app.withTypeProvider<ZodTypeProvider>()

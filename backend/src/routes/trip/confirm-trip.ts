@@ -8,6 +8,20 @@ import getMailClient from "../../lib/mailer";
 import { ClientError } from "../../errors/client-error";
 import { env } from "../../env";
 
+
+/**
+ * Confirms trip creation and sends invite emails to all guests.
+ * 
+ * **Query Parameters**
+ *  - `tripId` (UUID): The ID of the trip to confirm.
+ * 
+ * **Responses**
+ *  - `200 OK`: Trip confirmed successfully, and email sent. Redirects to the trip page.
+ *  - `400 Bad Request`: Invalid request data.
+ * 
+ * 
+ * @param app - The Fastify instance.
+ */
 export async function confirmTrip(app: FastifyInstance) {
     
     app.withTypeProvider<ZodTypeProvider>()

@@ -5,6 +5,25 @@ import { prisma } from "../../lib/prisma";
 import dayjs from "dayjs";
 import { ClientError } from "../../errors/client-error";
 
+
+/**
+ * Updates a trip's details.
+ * 
+ * **Query Parameters**
+ *  - `tripId` (UUID): The ID of the trip.
+ * 
+ * **Request Body**
+ *  - `destination` string: The destination of the trip.
+ *  - `startDate` string: The start date of the trip.
+ *  - `endDate` string: The end date of the trip.
+ * 
+ * **Responses**
+ *  - `200 OK`: Trip updated successfully. Returns the trip ID.
+ *  - `400 Bad Request`: Invalid request data.
+ * 
+ * 
+ * @param app - The Fastify instance.
+ */
 export async function updateTrip(app: FastifyInstance) {
     app.withTypeProvider<ZodTypeProvider>()
         .put('/trip/:tripId', {
