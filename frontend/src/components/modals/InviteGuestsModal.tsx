@@ -1,5 +1,5 @@
 import { AtSign, Plus, X } from "lucide-react";
-import { Dispatch, FormEvent, SetStateAction } from "react";
+import { Dispatch, FormEvent, SetStateAction, useEffect } from "react";
 import Button from "../Button";
 
 export default function InviteGuestsModal({invitees, setIsModalGuestsOpen, addInvitee, removeInvitee}: {
@@ -8,6 +8,18 @@ export default function InviteGuestsModal({invitees, setIsModalGuestsOpen, addIn
     addInvitee: (e: FormEvent<HTMLFormElement>) => void,
     removeInvitee: (email: string) => void
 }) {
+  useEffect(() => {
+    // if esc key is pressed close the modal
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsModalGuestsOpen(false);
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [setIsModalGuestsOpen]);
+
+
     return (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center">
         <div className="w-[640px] rounded-xl py-5 px-6 shadow-shape bg-zinc-900 space-y-5">
