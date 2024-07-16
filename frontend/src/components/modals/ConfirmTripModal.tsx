@@ -1,11 +1,27 @@
 import { AtSign, User, X } from "lucide-react";
-import { Dispatch, FormEvent, SetStateAction } from "react";
+import { Dispatch, FormEvent, SetStateAction, useEffect } from "react";
 import Button from "../Button";
 
-export default function ConfirmTripModal({setIsModalConfirmOpen, confirmTrip}: {
+export default function ConfirmTripModal({setIsModalConfirmOpen, confirmTrip, ownerState, ownerEmailState}: {
     setIsModalConfirmOpen: Dispatch<SetStateAction<boolean>>,
-    confirmTrip: (e: FormEvent<HTMLFormElement>) => void
+    confirmTrip: (e: FormEvent<HTMLFormElement>) => void,
+    ownerState: [string, Dispatch<SetStateAction<string>>],
+    ownerEmailState: [string, Dispatch<SetStateAction<string>>],
 }) {
+  const [owner, setOwner] = ownerState
+  const [ownerEmail, setOwnerEmail] = ownerEmailState
+
+  useEffect(() => {
+    // if esc key is pressed close the modal
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsModalConfirmOpen(false);
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [setIsModalConfirmOpen]);
+
     return (
       <div className="fixed inset-0 bg-black/60 flex items-center justify-center">
         <div className="w-[640px] rounded-xl py-5 px-6 shadow-shape bg-zinc-900 space-y-5">
@@ -44,6 +60,7 @@ export default function ConfirmTripModal({setIsModalConfirmOpen, confirmTrip}: {
                 type="text"
                 name="name"
                 placeholder="Full name"
+                onChange={(e) => setOwner(e.target.value)}
               /> 
             </div>
 
@@ -55,12 +72,14 @@ export default function ConfirmTripModal({setIsModalConfirmOpen, confirmTrip}: {
                 type="email"
                 name="email"
                 placeholder="E-mail"
+                onChange={(e) => setOwnerEmail(e.target.value)}
               /> 
             </div>              
 
             <Button
               size="full"
               type="submit"
+              disabled={owner === '' || ownerEmail === ''}
               >
               Confirm trip creation
             </Button>

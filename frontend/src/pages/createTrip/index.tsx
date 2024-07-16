@@ -4,12 +4,19 @@ import InviteGuestsModal from "../../components/modals/InviteGuestsModal"
 import ConfirmTripModal from "../../components/modals/ConfirmTripModal"
 import InputTripDetails from "./InputTripDetails"
 import InputGuests from "./InputGuests"
+import { DateRange } from "react-day-picker"
+import { api } from "../../lib/axios"
+import { Bounce, toast } from "react-toastify"
 
 export default function CreateTrip() {
   const [isGuestsOpen, setIsGuestsOpen] = useState(false)
   const [isModalGuestsOpen, setIsModalGuestsOpen] = useState(false)
-  
   const [isModalConfirmOpen, setIsModalConfirmOpen] = useState(false)
+
+  const [destination, setDestination] = useState<string>('')
+  const [dateRange, setDateRange] = useState<DateRange | undefined>()
+  const [ownerName, setOwnerName] = useState<string>('')
+  const [ownerEmail, setOwnerEmail] = useState<string>('')
   
   const [invitees, setInvitees] = useState<string[]>([])
 
@@ -21,10 +28,37 @@ export default function CreateTrip() {
     const form = new FormData(e.currentTarget)
     const email = form.get('email') as string
 
-    // TODO: mostrar mensagem de erro
-    if (!email) return
+    if (!email) {
+      toast.error("E-mail required", {
+          position: "bottom-left",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Bounce,
+      });
 
-    if (invitees.includes(email)) return
+      return
+    }
+
+    if (invitees.includes(email)) {
+      toast.error("E-mail already added", {
+          position: "bottom-left",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Bounce,
+      });
+
+      return
+    }
     
     setInvitees([...invitees, email])
 
@@ -39,7 +73,53 @@ export default function CreateTrip() {
   const confirmTrip = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    navigate('/trip/1')
+    if (!destination || 
+        !dateRange || !dateRange.from || !dateRange.to || 
+        !ownerName || !ownerEmail || 
+        invitees.length === 0) {
+
+      console.error('Missing required fields')
+      toast.error('Missing required fields', {
+          position: "bottom-left",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Bounce,
+      });
+
+      return
+    }
+
+    api.post('/trip', {
+      destination,
+      startDate: dateRange?.from,
+      endDate: dateRange?.to,
+      ownerName,
+      ownerEmail,
+      guestsEmails: invitees
+    }).then((response) => {
+      navigate(`/trip/${response.data.id}`)
+    }).catch(err => {
+      console.error(err)
+
+      const message = err.response?.data?.message || 'An error occurred while creating the trip.';
+
+      toast.error(message, {
+          position: "bottom-left",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Bounce,
+      });
+    })
   }
 
   return (
@@ -57,6 +137,8 @@ export default function CreateTrip() {
         <div className="space-y-4">
             <InputTripDetails
                 isGuestsOpenState={[isGuestsOpen, setIsGuestsOpen]}
+                dateRangeState={[dateRange, setDateRange]}
+                destinationState={[destination, setDestination]}
             />
 
           {isGuestsOpen && (
@@ -92,6 +174,8 @@ export default function CreateTrip() {
         <ConfirmTripModal
             confirmTrip={confirmTrip}
             setIsModalConfirmOpen={setIsModalConfirmOpen}
+            ownerState={[ownerName, setOwnerName]}
+            ownerEmailState={[ownerEmail, setOwnerEmail]}
         />
       )}
     </div>

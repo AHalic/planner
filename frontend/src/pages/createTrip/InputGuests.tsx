@@ -33,6 +33,8 @@ export default function InputGuests({invitees, setIsModalGuestsOpen, setIsModalC
         <Button
           type="button"
           onClick={() => setIsModalConfirmOpen(true)}
+          disabled={invitees.length === 0}
+          title={invitees.length === 0 ? 'Invite at least one guest' : ''}
           >
           Confirm Trip
 
