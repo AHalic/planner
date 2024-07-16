@@ -43,3 +43,8 @@ input {
     color: var(--toastify-text-color-error);
     background: theme('colors.red.800');
 }
+
+.Toastify__toast-theme--colored.Toastify__toast--success {
+    color: theme('colors.lime.50');
+    background: theme('colors.lime.500');
+}
