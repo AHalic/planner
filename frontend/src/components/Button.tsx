@@ -7,8 +7,8 @@ const buttonVariants = tv({
     base: 'max-w-full min-w-fit rounded-lg py-2 px-5 font-medium flex items-center justify-center gap-2 flex-no-wrap overflow-hidden',
     variants: {
         variant: {
-            primary: 'bg-lime-300 text-lime-950 hover:bg-lime-400',
-            secondary: 'bg-zinc-800 text-zinc-200 hover:bg-zinc-700',
+            primary: 'bg-lime-400 text-lime-950 hover:bg-lime-300 disabled:bg-lime-400/60',
+            secondary: 'bg-zinc-800 text-zinc-200 hover:bg-zinc-700 disabled:bg-zinc-800/60',
         },
 
         size: {
