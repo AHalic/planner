@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@geoapify/geocoder-autocomplete": "^2.0.1",
+    "@geoapify/react-geocoder-autocomplete": "^2.0.0",
     "axios": "^1.7.2",
     "date-fns": "^3.6.0",
     "lucide-react": "^0.406.0",
