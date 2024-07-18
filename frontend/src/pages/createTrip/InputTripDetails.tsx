@@ -4,6 +4,7 @@ import Button from "../../components/Button";
 import { DateRange, DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { formatDateRange } from "../../lib/formatDate";
+import InputAutocomplete from "../../components/InputAutocomplete";
 
 export default function InputTripDetails({isGuestsOpenState, dateRangeState, destinationState}: {
     isGuestsOpenState: [boolean, Dispatch<SetStateAction<boolean>>],
@@ -33,15 +34,11 @@ export default function InputTripDetails({isGuestsOpenState, dateRangeState, des
     return (
         <div className="h-16 bg-zinc-900 px-4 py-2 rounded-xl flex items-center shadow-shape gap-4">
             
-        {/* TODO: fazer componente generico */}
         <div className="flex items-center gap-2 flex-grow">
           <MapPin className="size-5 text-zinc-400" />
-          <input 
+          <InputAutocomplete 
             disabled={isGuestsOpen}
-            className="bg-transparent text-lg placeholder-zinc-400 flex-grow outline-none"
-            type="text"
-            placeholder="Where do you want to go?"
-            onChange={(e) => setDestination(e.target.value)}
+            onChange={setDestination}
           />
         </div>
 
