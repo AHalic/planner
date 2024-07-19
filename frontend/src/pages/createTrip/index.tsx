@@ -176,6 +176,8 @@ export default function CreateTrip() {
             setIsModalConfirmOpen={setIsModalConfirmOpen}
             ownerState={[ownerName, setOwnerName]}
             ownerEmailState={[ownerEmail, setOwnerEmail]}
+            destination={destination}
+            date={dateRange}
         />
       )}
     </div>

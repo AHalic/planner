@@ -1,12 +1,16 @@
 import { AtSign, User, X } from "lucide-react";
 import { Dispatch, FormEvent, SetStateAction, useEffect } from "react";
 import Button from "../Button";
+import { DateRange } from "react-day-picker";
+import { formatDateRange } from "../../lib/formatDate";
 
-export default function ConfirmTripModal({setIsModalConfirmOpen, confirmTrip, ownerState, ownerEmailState}: {
+export default function ConfirmTripModal({ setIsModalConfirmOpen, confirmTrip, ownerState, ownerEmailState, destination, date }: {
     setIsModalConfirmOpen: Dispatch<SetStateAction<boolean>>,
     confirmTrip: (e: FormEvent<HTMLFormElement>) => void,
     ownerState: [string, Dispatch<SetStateAction<string>>],
     ownerEmailState: [string, Dispatch<SetStateAction<string>>],
+    destination: string,
+    date: DateRange | undefined
 }) {
   const [owner, setOwner] = ownerState
   const [ownerEmail, setOwnerEmail] = ownerEmailState
@@ -41,9 +45,17 @@ export default function ConfirmTripModal({setIsModalConfirmOpen, confirmTrip, ow
 
             <p className="text-sm text-zinc-400">
               To complete the creation of the trip to&nbsp;
-              <span className="text-zinc-100 font-semibold">Florianópolis, Brazil</span>&nbsp;
+              <span className="text-zinc-100 font-semibold">
+                  {destination}
+              </span>&nbsp;
               on the dates&nbsp;
-              <span className="text-zinc-100 font-semibold">August 16th to 27th, 2024</span>&nbsp;
+              <span className="text-zinc-100 font-semibold">
+                {
+                  date && date.from && date.to 
+                  ? formatDateRange(date.from, date.to)
+                  : null
+                }
+              </span>&nbsp;
               fill in your details below:
             </p>
           </div>
