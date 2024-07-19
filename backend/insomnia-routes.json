@@ -229,7 +229,7 @@
             "method": "PUT",
             "body": {
                 "mimeType": "application/json",
-                "text": "{\n\t\"destination\": \"Paris, França\",\n\t\"startDate\": \"2024-07-25T18:00:00\",\n\t\"endDate\": \"2024-07-28T18:00:00\"\n}"
+                "text": "{\n\t\"startDate\": \"2024-07-25T18:00:00\",\n\t\"endDate\": \"2024-07-28T18:00:00\"\n}"
             },
             "preRequestScript": "",
             "parameters": [

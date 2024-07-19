@@ -13,7 +13,6 @@ import { ClientError } from "../../errors/client-error";
  *  - `tripId` (UUID): The ID of the trip.
  * 
  * **Request Body**
- *  - `destination` string: The destination of the trip.
  *  - `startDate` string: The start date of the trip.
  *  - `endDate` string: The end date of the trip.
  * 
@@ -32,13 +31,12 @@ export async function updateTrip(app: FastifyInstance) {
                     tripId: z.string().uuid(),
                 }),
                 body: z.object({
-                    destination: z.string().min(4),
                     startDate: z.coerce.date(), // Coerce the input to a date
                     endDate: z.coerce.date(),
                 })
             }
         }, async (request) => {
-            const { destination, startDate, endDate } = request.body
+            const { startDate, endDate } = request.body
             const { tripId } = request.params
 
             const trip = await prisma.trip.findUnique({
@@ -61,7 +59,6 @@ export async function updateTrip(app: FastifyInstance) {
             
             await prisma.trip.update({
                 data: {
-                    destination,
                     startDate,
                     endDate,
                 },
