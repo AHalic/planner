@@ -1,10 +1,11 @@
-import { ArrowRight, Calendar, Check, MapPin, Settings2, X } from "lucide-react";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { ArrowRight, Calendar, MapPin, Settings2 } from "lucide-react";
+import { Dispatch, SetStateAction, useState } from "react";
 import Button from "../../components/Button";
-import { DateRange, DayPicker } from "react-day-picker";
-import "react-day-picker/dist/style.css";
+import { DateRange } from "react-day-picker";
 import { formatDateRange } from "../../lib/formatDate";
 import InputAutocomplete from "../../components/InputAutocomplete";
+import DatePickerModal from "../../components/DatePickerModal";
+
 
 export default function InputTripDetails({isGuestsOpenState, dateRangeState, destinationState}: {
     isGuestsOpenState: [boolean, Dispatch<SetStateAction<boolean>>],
@@ -16,17 +17,6 @@ export default function InputTripDetails({isGuestsOpenState, dateRangeState, des
     const [selectedDateRange, setSelectedDateRange] = dateRangeState
     const [destination, setDestination] = destinationState
     
-    useEffect(() => {
-      // if esc key is pressed close the modal
-      const handleKeyDown = (event: KeyboardEvent) => {
-        if (event.key === 'Escape') {
-          setIsDatePickerOpen(false);
-        }
-      };
-      document.addEventListener('keydown', handleKeyDown);
-      return () => document.removeEventListener('keydown', handleKeyDown);
-    }, [setIsDatePickerOpen]);
-
     const displayDateRange = selectedDateRange && selectedDateRange.from && selectedDateRange.to
       ? formatDateRange(selectedDateRange.from, selectedDateRange.to)
       : null
@@ -82,35 +72,10 @@ export default function InputTripDetails({isGuestsOpenState, dateRangeState, des
         
         {/* DATE PICKER MODAL */}
         {isDatePickerOpen && (
-          <div className="fixed inset-0 bg-black/60 flex items-center justify-center">
-            <div className="w-fit rounded-xl py-5 px-6 shadow-shape bg-zinc-900 space-y-5">
-
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-lg font-semibold">Select dates</h2>
-
-                  <button 
-                    type="button"
-                    onClick={() => setIsDatePickerOpen(false)}
-                    className="text-zinc-400"
-                    >
-                      {selectedDateRange && selectedDateRange.from && selectedDateRange.to ? 
-                        <Check className="size-5 text-zinc-400 hover:text-zinc-300"/>
-                      :
-                        <X className="size-5 text-zinc-400 hover:text-zinc-300"/>
-                      }
-                  </button>
-                </div>
-              </div>
-
-              <DayPicker 
-                mode="range" 
-                selected={selectedDateRange} 
-                onSelect={setSelectedDateRange}
-                // Style defined in index.css
-              />
-            </div>
-          </div>
+          <DatePickerModal
+            selectedDateRangeState={[selectedDateRange, setSelectedDateRange]}
+            setIsDatePickerOpen={setIsDatePickerOpen}
+          />
         )}
       </div>
     )
