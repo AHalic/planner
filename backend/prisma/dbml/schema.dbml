@@ -1,0 +1,47 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table Trip {
+  id String [pk]
+  destination String [not null]
+  startDate DateTime [not null]
+  endDate DateTime [not null]
+  createdAt DateTime [default: `now()`, not null]
+  isConfirmed Boolean [not null, default: false]
+  guests Guest [not null]
+  activities Activity [not null]
+  links Link [not null]
+}
+
+Table Guest {
+  id String [pk]
+  name String
+  email String [not null]
+  isConfirmed Boolean [not null, default: false]
+  isOwner Boolean [not null, default: false]
+  tripId String [not null]
+  trip Trip [not null]
+}
+
+Table Activity {
+  id String [pk]
+  name String [not null]
+  date DateTime [not null]
+  tripId String [not null]
+  trip Trip [not null]
+}
+
+Table Link {
+  id String [pk]
+  name String [not null]
+  url String [not null]
+  tripId String [not null]
+  trip Trip [not null]
+}
+
+Ref: Guest.tripId > Trip.id
+
+Ref: Activity.tripId > Trip.id
+
+Ref: Link.tripId > Trip.id
